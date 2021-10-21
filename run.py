@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash
 
 
 app = Flask(__name__)
@@ -11,8 +11,11 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        flash("Thanks {}, we have received your message!".format(
+            request.form.get("name")))
     return render_template("contact.html", page_title="Contact")
 
 
